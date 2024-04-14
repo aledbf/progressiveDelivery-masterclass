@@ -11,14 +11,13 @@ help:
 all:
 	@echo "Replacing ingress hostname..."
 	
-	@sed -i "s|127.0.0.1.nip.io|$WORKSPACE_ID|" gitops/manifests/prometheus-grafana/prometheus-ingress.yaml
-	@sed -i "s|127.0.0.1.nip.io|$WORKSPACE_ID|" gitops/manifests/prometheus-grafana/grafana-ingress.yaml
-	@sed -i "s|127.0.0.1.nip.io|$WORKSPACE_ID|" gitops/manifests/argo-config/ingress.yaml
-	@sed -i "s|127.0.0.1.nip.io|$WORKSPACE_ID|" gitops/manifests/ingress-nginx
-	@sed -i "s|127.0.0.1.nip.io|$WORKSPACE_ID|" gitops/manifests/demo-application/ingress.yaml
+	@sed -i "s|127.0.0.1.nip.io|$$WORKSPACE_ID|" gitops/manifests/prometheus-grafana/prometheus-ingress.yaml
+	@sed -i "s|127.0.0.1.nip.io|$$WORKSPACE_ID|" gitops/manifests/prometheus-grafana/grafana-ingress.yaml
+	@sed -i "s|127.0.0.1.nip.io|$$WORKSPACE_ID|" gitops/manifests/argo-config/ingress.yaml
+	@sed -i "s|127.0.0.1.nip.io|$$WORKSPACE_ID|" gitops/manifests/demo-application/ingress.yaml
 
 	@echo "Deploy ArgoCD"
-	@kubectl create namespace argocd
+	@kubectl create namespace argocd || true
 	@kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 	@echo "Wait for ArgoCD to be ready..."
 	@kubectl wait --for=condition=available deployment/argocd-server -n argocd --timeout=300s
