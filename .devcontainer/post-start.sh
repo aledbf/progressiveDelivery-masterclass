@@ -9,4 +9,9 @@ echo "post-start start" >> ~/status
 #docker pull mcr.microsoft.com/dotnet/aspnet:5.0-alpine
 #docker pull mcr.microsoft.com/dotnet/sdk:5.0
 
+source /workspaces/progressiveDelivery-masterclass/.devcontainer
+mkdir -p ~/.kube
+echo "${KUBECONFIG_CONTENT}" > ~/.kube/config
+export KUBECONFIG=~/.kube/config
+
 echo "post-start complete" >> ~/status

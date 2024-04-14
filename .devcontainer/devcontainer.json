@@ -71,5 +71,5 @@
 		"ghcr.io/schlich/devcontainer-features/helmfile:1": {}
 	},
 
-	"initializeCommand": "echo WORKSPACE_ID=$(.devcontainer/get-hostname.sh) > .devcontainer/hostname.env"
+	"initializeCommand": ".devcontainer/get-env.sh"
 }

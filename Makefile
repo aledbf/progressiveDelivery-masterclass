@@ -1,4 +1,4 @@
-include .devcontainer/hostname.env
+include .devcontainer/container.env
 export
 
 .PHONY: help all create
