@@ -69,5 +69,7 @@
 		"ghcr.io/mpriscella/features/kind:1": {},
 		"ghcr.io/devcontainers-contrib/features/kubectl-asdf:2": {},
 		"ghcr.io/schlich/devcontainer-features/helmfile:1": {}
-    }	
+	},
+
+	"initializeCommand": "echo WORKSPACE_ID=$(.devcontainer/get-hostname.sh) > .devcontainer/hostname.env"
 }

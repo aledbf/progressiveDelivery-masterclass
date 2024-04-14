@@ -1,10 +1,22 @@
+include .devcontainer/hostname.env
+export
+
 .PHONY: help all create
+.DEFAULT_GOAL := all
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
 	@echo "  all         start the ArgoCD installation"
 
 all:
+	@echo "Replacing ingress hostname..."
+	
+	@sed -i "s|127.0.0.1.nip.io|$WORKSPACE_ID|" gitops/manifests/prometheus-grafana/prometheus-ingress.yaml
+	@sed -i "s|127.0.0.1.nip.io|$WORKSPACE_ID|" gitops/manifests/prometheus-grafana/grafana-ingress.yaml
+	@sed -i "s|127.0.0.1.nip.io|$WORKSPACE_ID|" gitops/manifests/argo-config/ingress.yaml
+	@sed -i "s|127.0.0.1.nip.io|$WORKSPACE_ID|" gitops/manifests/ingress-nginx
+	@sed -i "s|127.0.0.1.nip.io|$WORKSPACE_ID|" gitops/manifests/demo-application/ingress.yaml
+
 	@echo "Deploy ArgoCD"
 	@kubectl create namespace argocd
 	@kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
