@@ -6,7 +6,6 @@ ARG USER_GID=$USER_UID
 
 RUN export DEBIAN_FRONTEND=noninteractive
 
-COPY docker.sh /tmp/scripts/
 # update the container
 RUN apt-get update && \
     apt-get upgrade -y && \
@@ -41,11 +40,8 @@ RUN mkdir -p /etc/apt/keyrings \
     && NODE_MAJOR=20 && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list \
     && apt-get update && apt-get install nodejs -y
 
-
-RUN /tmp/scripts/docker.sh
-
 # change ownership of the home directory
-#RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}
+RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}
 
 WORKDIR /home/${USERNAME}
 USER ${USERNAME}

@@ -62,5 +62,9 @@
 	"postCreateCommand": "/bin/bash -c .devcontainer/post-create.sh",
 
 	// Use 'postStartCommand' to run commands after the container starts.
-	"postStartCommand": "/bin/bash -c .devcontainer/post-start.sh"
+	"postStartCommand": "/bin/bash -c .devcontainer/post-start.sh",
+
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    }	
 }
