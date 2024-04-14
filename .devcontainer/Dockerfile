@@ -13,18 +13,6 @@ RUN apt-get update && \
     apt-get autoremove -y && \
     apt-get clean -y
 
-# Install kubectl
-RUN curl -sSL -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
-    && chmod +x /usr/local/bin/kubectl
-
-# Install Helm
-RUN curl -s https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash -
-
-# Install kind
-RUN KIND_RELEASE=$(curl --silent "https://api.github.com/repos/kubernetes-sigs/kind/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/') \
-    && curl -sSL -o /usr/local/bin/kind https://kind.sigs.k8s.io/dl/$KIND_RELEASE/kind-linux-amd64 \
-    && chmod +x /usr/local/bin/kind
-
 # Install flagd
 RUN FLAGD_RELEASE=$(curl --silent "https://api.github.com/repos/open-feature/flagd/releases/latest" | grep '"tag_name":' | sed -E 's/.*"core\/v([^"]+)".*/\1/') \
     && curl -sSL -o /usr/local/bin/flagd.tar.gz https://github.com/open-feature/flagd/releases/download/flagd%2Fv${FLAGD_RELEASE}/flagd_${FLAGD_RELEASE}_Linux_x86_64.tar.gz \
@@ -46,6 +34,4 @@ RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}
 WORKDIR /home/${USERNAME}
 USER ${USERNAME}
 
-ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
 CMD [ "sleep", "infinity" ]
-
