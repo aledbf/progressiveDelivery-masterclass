@@ -13,12 +13,6 @@ git clone https://github.com/dynatrace-oss/progressivedelivery-masterclass
 cd progressiveDelivery-masterclass
 ```
 
-## Create a fresh cluster
-
-```
-kind create cluster --config cluster/kind-cluster.yaml
-```
-
 ## Install ArgoCD
 
 ```

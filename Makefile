@@ -9,8 +9,6 @@ help:
 all: create
 
 create:
-	@echo "Creating Kind cluster"
-	@kind create cluster --config cluster/kind-devcontainer.yaml
 	@echo "Deploy ArgoCD"
 	@kubectl create namespace argocd
 	@kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml

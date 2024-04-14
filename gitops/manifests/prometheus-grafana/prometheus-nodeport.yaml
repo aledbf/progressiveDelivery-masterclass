@@ -4,13 +4,12 @@ metadata:
   name: prometheus-nodeport
   namespace: monitoring
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - name: web
     port: 9090
     protocol: TCP
     targetPort: web
-    nodePort: 30102
   selector:
     app.kubernetes.io/component: prometheus
     app.kubernetes.io/instance: k8s

@@ -4,11 +4,10 @@ metadata:
   name: demoapp-nodeport
   namespace: demo
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app.kubernetes.io/name: featuredemo
   ports:
     - protocol: TCP
       port: 80
       targetPort: 3000
-      nodePort: 30103
