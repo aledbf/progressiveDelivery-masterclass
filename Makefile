@@ -2,13 +2,9 @@
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
-	@echo "  all         to create a Kind cluster"
-	@echo "  create      to create a Kind cluster"
+	@echo "  all         start the ArgoCD installation"
 
-
-all: create
-
-create:
+all:
 	@echo "Deploy ArgoCD"
 	@kubectl create namespace argocd
 	@kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
