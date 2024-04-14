@@ -45,7 +45,7 @@ RUN mkdir -p /etc/apt/keyrings \
 RUN /tmp/scripts/docker.sh
 
 # change ownership of the home directory
-RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}
+#RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}
 
 WORKDIR /home/${USERNAME}
 USER ${USERNAME}
