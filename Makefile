@@ -12,8 +12,8 @@ all:
 	@echo "Deploy ArgoCD"
 	@kubectl create namespace argocd || true
 	@echo "Replacing ingress hostname..."
-	@sed -i "s|ENCODED_WORKSPACE_ID|$$ENCODED_WORKSPACE_ID|" gitops/manifests/argo-secret-vars.yaml
-	@kubectl apply -n argocd -f gitops/manifests/argo-secret-vars.yaml
+	@sed -i "s|ENCODED_WORKSPACE_ID|$$ENCODED_WORKSPACE_ID|" gitops/argo-secret-vars.yaml
+	@kubectl apply -n argocd -f gitops/argo-secret-vars.yaml
 	@kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 	@echo "Wait for ArgoCD to be ready..."
 	@kubectl wait --for=condition=available deployment/argocd-server -n argocd --timeout=300s
