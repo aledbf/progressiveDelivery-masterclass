@@ -24,15 +24,6 @@ spec:
         repoURL: 'https://github.com/aledbf/progressivedelivery-masterclass.git'
         targetRevision: main
         path: "gitops/manifests/argo-config"
-        kustomize:
-          patches:
-          - target:
-              kind: Ingress
-              name: argocd
-            patch: |-
-              - op: replace
-                path: spec/hosts/0
-                value: argocd.{{ .ingress_host }}
       destination:
         namespace: argocd
         server: 'https://kubernetes.default.svc'
