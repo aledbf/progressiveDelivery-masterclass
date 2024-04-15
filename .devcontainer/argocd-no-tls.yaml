@@ -8,3 +8,5 @@ metadata:
   namespace: argocd
 data:
   server.insecure: "true"
+  # Random string to avoid internet issues
+  server.secretkey: f581a68dffcf7b68905d1ac0114c2b0aad1d6b0eb76f45881c22d1ea12abd595

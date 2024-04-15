@@ -65,9 +65,10 @@ spec:
       port: 8889
       protocol: TCP
       targetPort: 8889
+      nodePort: 30080
   selector:
     component: otel-collector
-  type: LoadBalancer
+  type: NodePort
 ---
 apiVersion: apps/v1
 kind: Deployment

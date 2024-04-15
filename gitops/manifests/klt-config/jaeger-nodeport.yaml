@@ -10,6 +10,7 @@ spec:
     port: 16686
     protocol: TCP
     targetPort: 16686
+    nodePort: 30104
   selector:
     app: jaeger
     app.kubernetes.io/component: all-in-one

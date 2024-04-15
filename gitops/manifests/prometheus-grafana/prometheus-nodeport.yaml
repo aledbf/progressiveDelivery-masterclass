@@ -4,10 +4,11 @@ metadata:
   name: prometheus-nodeport
   namespace: monitoring
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
   - name: web
     port: 9090
+    nodePort: 30102
     protocol: TCP
     targetPort: web
   selector:

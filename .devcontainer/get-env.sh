@@ -30,7 +30,7 @@ done
 cp /usr/local/gitpod/shared/kubeconfig.yaml "${CURRENT_DIR}/kubeconfig.yaml"
 
 # create the argocd namespace
-kubectl create namespace argocd
+kubectl get ns argocd || kubectl create ns argocd
 
 cat <<EOF | kubectl apply -f -
 apiVersion: v1

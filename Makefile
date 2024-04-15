@@ -10,7 +10,7 @@ help:
 
 all:	
 	@echo "Deploy ArgoCD"
-	@kubectl create namespace argocd || true
+	@kubectl get ns argocd || kubectl create ns argocd
 	@echo "Replacing ingress hostname..."
 	@kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 	@echo "Wait for ArgoCD to be ready..."
