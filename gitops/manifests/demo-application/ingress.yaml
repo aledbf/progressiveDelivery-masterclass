@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: {{.ingress_host}}
+  - host: demoapp
     http:
       paths:
       - path: /

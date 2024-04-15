@@ -12,13 +12,11 @@ all:
 	@echo "Deploy ArgoCD"
 	@kubectl create namespace argocd || true
 	@echo "Replacing ingress hostname..."
-	@sed -i "s|ENCODED_WORKSPACE_ID|$$ENCODED_WORKSPACE_ID|" gitops/argo-secret-vars.yaml
+	@sed -i "s|INGRESS_HOST|$$INGRESS_HOST|" gitops/argo-secret-vars.yaml
 	@kubectl apply -n argocd -f gitops/argo-secret-vars.yaml
 	@kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 	@echo "Wait for ArgoCD to be ready..."
 	@kubectl wait --for=condition=available deployment/argocd-server -n argocd --timeout=300s
-	@helm repo add appset-secret-plugin https://small-hack.github.io/appset-secret-plugin
-	@helm install appset-secret-plugin appset-secret-plugin/appset-secret-plugin	
 	@echo "Configure ArgoCD"
 	@kubectl apply -n argocd -f .devcontainer/argocd-no-tls.yaml
 	@kubectl apply -n argocd -f .devcontainer/argocd-nodeport.yaml

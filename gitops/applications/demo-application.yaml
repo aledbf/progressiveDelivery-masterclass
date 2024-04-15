@@ -6,13 +6,6 @@ metadata:
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
-  generators:
-    - plugin:
-        configMapRef:
-          name: secret-plugin-generator
-        input:
-          parameters:
-            env_vars: ["ingress_host"]
   template:
     metadata:
       annotations:
@@ -40,3 +33,15 @@ spec:
             factor: 2
         syncOptions:
           - CreateNamespace=true
+        kustomize:
+          replacements:
+            - source:
+                kind: ConfigMap
+                name: ingress-hostnames
+                namespace: argocd
+                fieldPath: data.demoapp
+              targets:
+                - select:
+                    name: demoapp
+                  fieldPaths:
+                    - spec.rules[0].host

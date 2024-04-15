@@ -6,7 +6,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: grafana.{{.ingress_host}}
+  - host: grafana
     http:
       paths:
       - path: /

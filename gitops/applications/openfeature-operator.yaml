@@ -6,13 +6,6 @@ metadata:
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
-  generators:
-    - plugin:
-        configMapRef:
-          name: secret-plugin-generator
-        input:
-          parameters:
-            env_vars: ["ingress_host"]
   template:
     metadata:
       annotations:

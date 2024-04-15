@@ -6,7 +6,9 @@ CURRENT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
 default_interface=$(ip route show default | awk '/default/ {print $5}')
 default_ip=$(ip addr show "$default_interface" | awk '/inet / {print $2}' | cut -d/ -f1)
 
-echo "INGRESS_HOST=$(printf "%s.nip.io" "$default_ip")" > "${CURRENT_DIR}/container.env"
+export INGRESS_HOST=$(printf "%s.nip.io" "$default_ip")
+
+echo "INGRESS_HOST=${INGRESS_HOST}" > "${CURRENT_DIR}/container.env"
 
 echo "Waiting for the kind cluster to be ready..."
 export KUBECONFIG="/usr/local/gitpod/shared/kubeconfig.yaml"
@@ -25,5 +27,23 @@ while :; do
   sleep 5
 done
 
-cp /usr/local/gitpod/shared/kubeconfig.yaml "${CURRENT_DIR}/kubeconfig.yaml"
+#cp /usr/local/gitpod/shared/kubeconfig.yaml "${CURRENT_DIR}/kubeconfig.yaml"
 
+# create the argocd namespace
+kubectl create namespace argocd
+
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ingress-hostnames
+  namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: argocd
+data:
+  argocd: "argocd.${INGRESS_HOST}"
+  grafana: "grafana.${INGRESS_HOST}"
+  demoapp: "${INGRESS_HOST}"
+  jaeger: "jaeger.${INGRESS_HOST}"  
+  prometheus: "prometheus.${INGRESS_HOST}"
+EOF
