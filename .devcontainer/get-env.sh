@@ -9,7 +9,7 @@ default_ip=$(ip addr show "$default_interface" | awk '/inet / {print $2}' | cut 
 echo "ENCODED_WORKSPACE_ID=$(printf "%s.nip.io" "$default_ip" | base64 -w0)" > "${CURRENT_DIR}/container.env"
 
 echo "Waiting for the kind cluster to be ready..."
-export KUBECONFIG=/usr/local/gitpod/shared/kubeconfig.yaml
+export KUBECONFIG="/usr/local/gitpod/shared/kubeconfig.yaml"
 
 while :; do
   ready_nodes=$(kubectl get nodes --no-headers | grep -c "Ready")
@@ -22,4 +22,5 @@ while :; do
   sleep 5
 done
 
-cat /usr/local/gitpod/shared/kubeconfig.yaml > "${CURRENT_DIR}/kubeconfig.yaml"
+cp /usr/local/gitpod/shared/kubeconfig.yaml "${CURRENT_DIR}/kubeconfig.yaml"
+
