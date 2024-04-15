@@ -6,7 +6,13 @@ metadata:
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
-  generators: []
+  generators:
+    - plugin:
+        configMapRef:
+          name: secret-var-plugin-generator
+        input:
+          parameters:
+            secret_vars: ["ingress_host"]
   template:
     metadata:
       annotations:
@@ -19,17 +25,14 @@ spec:
         targetRevision: main
         path: "gitops/manifests/demo-application"
         kustomize:
-          replacements:
-            - source:
-                kind: ConfigMap
-                name: ingress-hostnames
-                namespace: argocd
-                fieldPath: data.demoapp
-              targets:
-                - select:
-                    name: demoapp
-                  fieldPaths:
-                    - spec.rules[0].host
+          patches:
+          - target:
+              kind: Ingress
+              name: demoapp
+            patch: |-
+              - op: replace
+                path: spec/hosts/0
+                value: {{ .ingress_host }}
       destination:
         namespace: demo
         server: 'https://kubernetes.default.svc'

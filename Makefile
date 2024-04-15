@@ -11,6 +11,8 @@ help:
 all:	
 	@echo "Deploy ArgoCD"
 	@kubectl get ns argocd || kubectl create ns argocd
+	@helm repo add appset-secret-plugin https://small-hack.github.io/appset-secret-plugin
+	@helm upgrade --install appset-secret-plugin --namespace argocd appset-secret-plugin/appset-secret-plugin --set secretVars.existingSecret=argocd-secret-vars
 	@echo "Replacing ingress hostname..."
 	@kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 	@echo "Wait for ArgoCD to be ready..."

@@ -34,16 +34,14 @@ kubectl get ns argocd || kubectl create ns argocd
 
 cat <<EOF | kubectl apply -f -
 apiVersion: v1
-kind: ConfigMap
+kind: Secret
 metadata:
-  name: ingress-hostnames
+  name: argocd-secret-vars
   namespace: argocd
   labels:
     app.kubernetes.io/part-of: argocd
-data:
-  argocd: "argocd.${INGRESS_HOST}"
-  grafana: "grafana.${INGRESS_HOST}"
-  demoapp: "${INGRESS_HOST}"
-  jaeger: "jaeger.${INGRESS_HOST}"  
-  prometheus: "prometheus.${INGRESS_HOST}"
+type: Opaque
+stringData:
+  secret_vars.yaml: |
+    ingress_host: "${INGRESS_HOST}"
 EOF
