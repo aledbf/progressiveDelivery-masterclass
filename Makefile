@@ -8,19 +8,17 @@ help:
 	@echo "Please use \`make <target>' where <target> is one of"
 	@echo "  all         start the ArgoCD installation"
 
-all:
-	@echo "Replacing ingress hostname..."
-	
-	@sed -i "s|127.0.0.1.nip.io|$$WORKSPACE_ID|" gitops/manifests/prometheus-grafana/prometheus-ingress.yaml
-	@sed -i "s|127.0.0.1.nip.io|$$WORKSPACE_ID|" gitops/manifests/prometheus-grafana/grafana-ingress.yaml
-	@sed -i "s|127.0.0.1.nip.io|$$WORKSPACE_ID|" gitops/manifests/argo-config/ingress.yaml
-	@sed -i "s|127.0.0.1.nip.io|$$WORKSPACE_ID|" gitops/manifests/demo-application/ingress.yaml
-
+all:	
 	@echo "Deploy ArgoCD"
 	@kubectl create namespace argocd || true
+	@echo "Replacing ingress hostname..."
+	@sed -i "s|ENCODED_WORKSPACE_ID|$$ENCODED_WORKSPACE_ID|" gitops/manifests/argo-secret-vars.yaml
+	@kubectl apply -n argocd -f gitops/manifests/argo-secret-vars.yaml
 	@kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 	@echo "Wait for ArgoCD to be ready..."
 	@kubectl wait --for=condition=available deployment/argocd-server -n argocd --timeout=300s
+	@helm repo add appset-secret-plugin https://small-hack.github.io/appset-secret-plugin
+	@helm install appset-secret-plugin appset-secret-plugin/appset-secret-plugin	
 	@echo "Configure ArgoCD"
 	@kubectl apply -n argocd -f .devcontainer/argocd-no-tls.yaml
 	@kubectl apply -n argocd -f .devcontainer/argocd-nodeport.yaml

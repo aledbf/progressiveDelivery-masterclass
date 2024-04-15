@@ -26,3 +26,10 @@ spec:
         factor: 2
     syncOptions:
       - CreateNamespace=true
+  generators:
+    - plugin:
+        configMapRef:
+          name: secret-plugin-generator
+        input:
+          parameters:
+            secret_vars: ["ingress_host"]
