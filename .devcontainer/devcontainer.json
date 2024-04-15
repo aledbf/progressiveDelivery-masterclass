@@ -67,8 +67,7 @@
     "features": {
         "ghcr.io/devcontainers/features/docker-in-docker:2": {},
 		"ghcr.io/mpriscella/features/kind:1": {},
-		"ghcr.io/devcontainers-contrib/features/kubectl-asdf:2": {},
-		"ghcr.io/schlich/devcontainer-features/helmfile:1": {}
+		"ghcr.io/devcontainers-contrib/features/kubectl-asdf:2": {}
 	},
 
 	"initializeCommand": ".devcontainer/get-env.sh"

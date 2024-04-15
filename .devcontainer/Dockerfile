@@ -28,6 +28,9 @@ RUN mkdir -p /etc/apt/keyrings \
     && NODE_MAJOR=20 && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list \
     && apt-get update && apt-get install nodejs -y
 
+# Install Helm
+RUN curl -s https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash -
+    
 # change ownership of the home directory
 RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}
 
