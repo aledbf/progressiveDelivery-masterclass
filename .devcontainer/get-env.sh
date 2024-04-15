@@ -11,6 +11,10 @@ echo "ENCODED_WORKSPACE_ID=$(printf "%s.nip.io" "$default_ip" | base64 -w0)" > "
 echo "Waiting for the kind cluster to be ready..."
 export KUBECONFIG="/usr/local/gitpod/shared/kubeconfig.yaml"
 
+while [ ! -f "${KUBECONFIG}" ]; do
+  sleep 5
+done
+
 while :; do
   ready_nodes=$(kubectl get nodes --no-headers | grep -c "Ready")
 
