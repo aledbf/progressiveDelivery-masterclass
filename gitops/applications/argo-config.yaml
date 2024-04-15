@@ -21,7 +21,7 @@ spec:
       namespace: argocd
     spec:
       source:
-        repoURL: 'https://github.com/aledbf/progressivedelivery-masterclass.git'
+        repoURL: 'https://github.com/gitpod-io/progressivedelivery-masterclass.git'
         targetRevision: main
         path: "gitops/manifests/argo-config"
       destination:
