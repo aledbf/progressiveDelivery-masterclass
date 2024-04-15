@@ -27,7 +27,7 @@ while :; do
   sleep 5
 done
 
-#cp /usr/local/gitpod/shared/kubeconfig.yaml "${CURRENT_DIR}/kubeconfig.yaml"
+cp /usr/local/gitpod/shared/kubeconfig.yaml "${CURRENT_DIR}/kubeconfig.yaml"
 
 # create the argocd namespace
 kubectl create namespace argocd
